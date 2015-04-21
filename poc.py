@@ -20,10 +20,13 @@ config.set('login', 'email', email)
 config.set('login', 'password', password)
 config.write(open('config.ini', 'w'))
 
+
+recommended = dict()
 song_list = api.get_all_songs()
 for artists in song_list:
     for artist in artists['artistId']:
         info = api.get_artist_info(artist,
                                    include_albums=False)
         for related in info['related_artists']:
-            print related['name']
+            recommended[related['artistId']] = related['name']
+print recommended.values()
